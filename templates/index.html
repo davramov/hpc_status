@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NERSC Systems Status Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .status { display: flex; align-items: center; margin-bottom: 10px; }
+        .indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .active { background-color: green; }
+        .down { background-color: red; }
+        .degraded { background-color: yellow; }
+        .unknown { background-color: gray; }
+    </style>
+</head>
+<body>
+    <h1>NERSC Systems Status Dashboard</h1>
+    {% for system, details in systems_status.items() %}
+        <div class="status">
+            <div class="indicator {% if details.status == 'active' %}active{% elif details.status == 'down' %}down{% elif details.status == 'degraded' %}degraded{% else %}unknown{% endif %}"></div>
+            <span>{{ details.full_name or system.capitalize() }}: {{ details.status }}</span>
+        </div>
+    {% endfor %}
+</body>
+</html>
